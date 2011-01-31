@@ -1,0 +1,144 @@
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="../style.css" />
+<title>C++语言笔记</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<div class="toc">
+<ul>
+<li><a href="#toc_0.1">指针与引用</a></li>
+<ul>
+<li><a href="#toc_0.1.1">什么是引用</a></li>
+<li><a href="#toc_0.1.2">引用与指针的区别</a></li>
+</ul>
+<li><a href="#toc_0.2">函数</a></li>
+<ul>
+<li><a href="#toc_0.2.1">函数的调用方式</a></li>
+</ul>
+</ul>
+</ul>
+</div>
+<h2 id="toc_0.1">指针与引用</h2>
+<h3 id="toc_0.1.1">什么是引用</h3>
+<ol>
+<li>
+引用是对象的另一个名字，在实际程序中，引用主要用作函数的形式参数来使用
+</li>
+<li>
+例子
+<pre class = "brush: c++">
+     int a = 100;
+     int &amp;refa = a; //&amp;refa 引用 a
+     int &amp;refa = b; //错误，引用必须被初始化
+     int &amp;refa = 10;//错误，初始化必须为一个对象
+</pre>
+</li>
+</ol>
+<h3 id="toc_0.1.2">引用与指针的区别</h3>
+<ol>
+<li>
+指针是变量，引用不是变量
+</li>
+<li>
+指针可以被引用，而引用不可以再被引用
+</li>
+<li>
+不能定义引用数组，可以定义指针数组
+</li>
+</ol>
+<h2 id="toc_0.2">函数</h2>
+<h3 id="toc_0.2.1">函数的调用方式</h3>
+<ul>
+<li>
+传值调用方式
+</li>
+</ul>
+<blockquote>
+将实参的值传递给形参，形参拥有实参的一个备份。当在函数中改变形参的值时，改变的是这个备份中的值，不会影响原来实参的值，这在很多情况下是重要的。
+</blockquote>
+<pre class = "brush:c++">
+#include&lt;iostream&gt;
+using namespace std;
+void main()
+{
+	int a(5),b(8);
+	cout&lt;&lt;"main中交换前的初值 a= "&lt;&lt;a&lt;&lt;" b="&lt;&lt;b&lt;&lt;endl;
+	swap(a,b);
+	cout&lt;&lt;"调用swap()函数后的 a= "&lt;&lt;a&lt;&lt;" b="&lt;&lt;b&lt;&lt;endl;
+}
+void swap(int x,int y)
+{
+	int t = x; x = y; y = t;
+	cout&lt;&lt;"swap 函数中交换后的 a ="&lt;&lt;x&lt;&lt;" b="&lt;&lt;b&lt;&lt;endl;
+}
+该程序运行结果：
+main中交换前的初值 a=5 b=8
+调用swap()函数后的 a=5 b=8
+swap函数中交换后的 a=8 b=5
+</pre>
+<ul>
+<li>
+传地址
+</li>
+</ul>
+<blockquote>
+采用传址调用时，调用函数的实参使用地址值，而被调用函数的形参使用指针变量。调用时将实参的地址值赋给对应王戎戏陌辰指针变量，使形参指针直接指向实参变量。因此，传址调用时，在被调用函数中可以通过改变形参指针所指向实参变量值来修改实参值。
+</blockquote>
+<pre class="brush:c++">
+#include&lt;iostream&gt;
+using namespace std;
+void seap(int*, int*);
+void main()
+{
+	int a(5),b(8);
+	cout&lt;&lt;"main中交换前的初值 a="&lt;&lt;a&lt;&lt;" b="&lt;&lt;b&lt;&lt;endl;
+	swap(&amp;a,&amp;b);
+	cout&lt;&lt;"调用swap()函数后的 a="&lt;&lt;a&lt;&lt;" b="&lt;&lt;b&lt;&lt;endl;
+}
+void swap(int *x,int *y)
+{
+	int t = *x;
+	*x = *y;
+	*y = t;
+	cout&lt;&lt;"swap函数中交换后的 a="&lt;&lt;*x&lt;&lt;" b="&lt;&lt;*y&lt;&lt;endl;
+}
+该程序的运行结果：
+main中交换前的初值 a=5;b=8;
+调用swap()函数后的 a=8;b=5;
+swap函数中交换后的 a=8;b=5;
+</pre>
+<ul>
+<li>
+传引用
+</li>
+</ul>
+<blockquote>
+使用引用作函数的形参时，要求实参用变量名，将实参变量名赋给形参引用，即形参实际上成了实参的别名。因此，在被调用函数中对引用的修改，实际上就是直接通过引用来改变实参的变量值。这就是所谓的引用调用。
+</blockquote>
+<pre>
+#include&lt;iostrea&gt;
+using namespace std;
+void swap(int*,int*);
+void main()
+{
+	int a(5),b(8);
+	cout&lt;&lt;"main中交换前的初值 a="&lt;&lt;a&lt;&lt;"b ="&lt;&lt;b&lt;&lt;endl;
+	swap(&amp;a,&amp;b);
+	cout&lt;&lt;"调用swap()函数后的 a="&lt;&lt;a&lt;&lt;"b ="&lt;&lt;b&lt;&lt;endl;
+}
+void swap(int *x,int *y）
+{
+	int t=*x;
+	*x = *y;
+	*y = t;
+	cout&lt;&lt;"swap函数中交换后的 a="&lt;&lt;*x&lt;&lt;" b="&lt;&lt;*y&lt;&lt;endl;
+}
+该程序运行结果：
+main中交换前的初值 a=5 b=8;
+swap函数中交换后的 a=8 b=5;
+调用swap()函数后的 a=8 b=5;
+</pre>
+
+</body>
+</html>

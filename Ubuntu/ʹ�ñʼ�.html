@@ -1,0 +1,55 @@
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="../style.css" />
+<title>使用笔记</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<h1 id="toc_1">在Ubuntu的日子</h1>
+<p>
+使用apt-get安装记录文件 <em>/var/log/dpkg.log</em>
+</p>
+<ol>
+<li>
+linux 下mp3标签乱码的解决方法
+</li>
+</ol>
+<p>
+只需要把mp3标签里面用gbk、gb18030、big5等编码存储的中文内容修改为Unicode编码，那么基本上所有Linux下的播放器都能正常识别mp3标签了。
+关于mp3编码的转换，介绍一个工具----Mutagen，假如你安装了Quod Libet，那么这个包已经安装上去了。如果没有，执行下列命令就可以了。
+</p>
+
+<p>
+sudo apt-get install python-mutagen
+</p>
+
+<p>
+工具的使用方法
+</p>
+
+<p>
+#转换mp3文件所在的目录下，执行：
+</p>
+<blockquote>
+mid3iconv -e gbk *.mp3
+</blockquote>
+
+<p>
+#转换当前目录下所有mp3文件(包括子目录)执行：
+</p>
+<blockquote>
+find . -iname "*.mp3" -execdir mid3iconv -e gbk {} \; 
+</blockquote>
+
+<p>
+如果觉得每次都要输入命令很麻烦，也可以建立个shell脚本来批量转换：
+</p>
+<blockquote>
+新建文件，写入：
+#!/bin/sh
+IFS=""
+find . -iname "*.mp3" -execdir mid3iconv -e gbk {} \
+</blockquote>
+
+</body>
+</html>
